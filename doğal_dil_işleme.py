@@ -13,18 +13,20 @@ ps=PorterStemmer()
 
 from nltk.corpus import stopwords
 
-
+#stopwords yani anlamsız kelimeleri çıkarmak ve düzenlemek için kullandığım kod
 derlem =[]
 for i in range(285):
+    #alfabedeki kelieler ve türkçe karakterler için
     tweet=re.sub('[^a-zA-ZİçÇğüÜıöÖşŞ]',' ',tweetler['tweetler'][i])
     tweet= tweet.lower()
     tweet=tweet.split()
+    #stopwords her dil için değişiyor bu yüzden turkish kısmı ona göre değiştirmeniz gerek. Tabi kütüphanede o dil olması lazım yoksa internetten o dilin stopwordlerini bulmanız lazım 
     tweet=[ps.stem(kelime) for kelime in tweet if not kelime in set(stopwords.words('turkish'))]
     tweet= ' '.join(tweet)
     derlem.append(tweet)
 
 
-
+#kelimelerden kaç tane olduğunu sayıyor
 from sklearn.feature_extraction.text import CountVectorizer
 cv = CountVectorizer(max_features = 2000)
 X = cv.fit_transform(derlem).toarray() # bağımsız değişken
@@ -53,7 +55,6 @@ from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test,y_pred1)
 print("********************************************************************************")
 print("Logistic")
-#%73
 print(cm)
 
 
@@ -68,7 +69,6 @@ y_pred2 = knn.predict(X_test)
 cm = confusion_matrix(y_test,y_pred2)
 print("********************************************************************************")
 print("KNN")
-#%58
 print(cm)
 
 
@@ -82,7 +82,6 @@ y_pred3 = svc.predict(X_test)
 cm = confusion_matrix(y_test,y_pred3)
 print("********************************************************************************")
 print('SVC')
-#%69
 print(cm)
 
 from sklearn.svm import SVC
@@ -94,7 +93,6 @@ y_pred3 = svc.predict(X_test)
 cm = confusion_matrix(y_test,y_pred3)
 print("********************************************************************************")
 print('SVC linear')
-#%71
 print(cm)
 
 from sklearn.svm import SVC
@@ -106,7 +104,6 @@ y_pred3 = svc.predict(X_test)
 cm = confusion_matrix(y_test,y_pred3)
 print("********************************************************************************")
 print('SVC poly')
-#%54
 print(cm)
 
 from sklearn.svm import SVC
@@ -118,7 +115,6 @@ y_pred3 = svc.predict(X_test)
 cm = confusion_matrix(y_test,y_pred3)
 print("********************************************************************************")
 print('SVC sigmoid')
-#%76
 print(cm)
 
 
@@ -132,7 +128,6 @@ y_pred4 = gnb.predict(X_test)
 cm = confusion_matrix(y_test,y_pred4)
 print("********************************************************************************")
 print('GNB')
-#%71
 print(cm)
 
 
@@ -145,7 +140,6 @@ y_pred5 = dtc.predict(X_test)
 cm = confusion_matrix(y_test,y_pred5)
 print("********************************************************************************")
 print('DTC')
-#%66
 print(cm)
 
 from sklearn.tree import DecisionTreeClassifier
@@ -157,7 +151,6 @@ y_pred5 = dtc.predict(X_test)
 cm = confusion_matrix(y_test,y_pred5)
 print("********************************************************************************")
 print('DTC gini')
-#%65
 print(cm)
 
 
@@ -169,7 +162,6 @@ y_pred6 = rfc.predict(X_test)
 cm = confusion_matrix(y_test,y_pred6)
 print("********************************************************************************")
 print('RFC')
-#%69
 print(cm)
 
 from sklearn.ensemble import RandomForestClassifier
@@ -180,6 +172,5 @@ y_pred6 = rfc.predict(X_test)
 cm = confusion_matrix(y_test,y_pred6)
 print("********************************************************************************")
 print('RFC gini')
-#%71
 print(cm)
 
